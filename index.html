@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Datang Pejuang ASN!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .hero-section {
+            background-color: #e0f2fe; /* sky-100 */
+            background-image: linear-gradient(to bottom right, #e0f2fe, #bfdbfe); /* light blue gradient */
+        }
+        .cta-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .feature-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0; /* slate-200 */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .testimonial-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0; /* slate-200 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .ai-response-box {
+            min-height: 100px;
+            background-color: #f0f9ff; /* sky-50 */
+            border: 1px solid #bfdbfe; /* sky-200 */
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 400px; /* Set a max height for the response box */
+            line-height: 1.6; /* Adjust line height for readability */
+        }
+        .ai-response-box strong {
+            font-weight: 700; /* For bold text */
+        }
+        .ai-response-box ul {
+            list-style: disc; /* For unordered lists */
+            padding-left: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .ai-response-box ol {
+            list-style: decimal; /* For ordered lists */
+            padding-left: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .ai-response-box li {
+            margin-bottom: 5px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #0ea5e9; /* sky-500 */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="min-h-screen flex flex-col justify-between">
+        <section class="hero-section py-16 sm:py-24 md:py-32 text-center relative overflow-hidden">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-sky-800 leading-tight mb-6">
+                    Siap Jadi ASN Berintegritas?
+                </h1>
+                <p class="text-lg sm:text-xl text-slate-700 mb-10 max-w-2xl mx-auto">
+                    Asah pemahaman Anda tentang aspek-aspek penting ASN: Integritas, Nasionalisme, Bela Negara, Pilar Negara, dan Bahasa Indonesia. Latihan soal interaktif dan trik cepat siap bantu Anda!
+                </p>
+                <a href="twk.html" class="cta-button inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-semibold rounded-full text-white bg-sky-600 hover:bg-sky-700 md:py-4 md:text-lg md:px-10">
+                    Mulai Latihan
+                    <span class="ml-2" aria-hidden="true">→</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="py-16 bg-slate-100">
+            <div class="container mx-auto px-4 max-w-5xl">
+                <h2 class="text-3xl font-bold text-center text-sky-700 mb-12">Mengapa Aplikasi Ini Penting?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="feature-card p-6 rounded-lg shadow-md text-center">
+                        <div class="text-4xl text-sky-500 mb-4">📚</div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Materi Lengkap & Ringkas</h3>
+                        <p class="text-slate-600 text-sm">Pahami definisi dan kata kunci penting dari 5 aspek ASN dengan mudah.</p>
+                    </div>
+                    <div class="feature-card p-6 rounded-lg shadow-md text-center">
+                        <div class="text-4xl text-sky-500 mb-4">💡</div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Soal Interaktif & Trik Jitu</h3>
+                        <p class="text-slate-600 text-sm">Uji pemahaman Anda dengan soal-soal latihan dan dapatkan trik menjawab cepat.</p>
+                    </div>
+                    <div class="feature-card p-6 rounded-lg shadow-md text-center">
+                        <div class="text-4xl text-sky-500 mb-4">🚀</div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Persiapan Maksimal</h3>
+                        <p class="text-slate-600 text-sm">Tingkatkan peluang Anda lolos seleksi ASN dengan latihan yang terarah.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4 max-w-5xl">
+                <h2 class="text-3xl font-bold text-center text-sky-700 mb-12">Apa Kata Mereka?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="testimonial-card p-6 rounded-lg shadow-md">
+                        <p class="text-slate-700 text-base italic mb-4">"Aplikasi ini sangat membantu saya dalam memahami materi ASN yang kompleks. Soal-soalnya relevan dan trik menjawabnya sangat efektif!"</p>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-sky-200 rounded-full flex items-center justify-center text-sky-700 font-bold mr-3">A.S</div>
+                            <div>
+                                <p class="font-semibold text-slate-800">Ahmad Syahputra</p>
+                                <p class="text-sm text-slate-500">Calon ASN 2024</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card p-6 rounded-lg shadow-md">
+                        <p class="text-slate-700 text-base italic mb-4">"Desainnya modern dan mudah digunakan. Fitur kuis interaktifnya membuat belajar jadi lebih menyenangkan dan tidak membosankan."</p>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-sky-200 rounded-full flex items-center justify-center text-sky-700 font-bold mr-3">R.W</div>
+                            <div>
+                                <p class="font-semibold text-slate-800">Rina Wijayanti</p>
+                                <p class="text-sm text-slate-500">Peserta Bimbel ASN</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-slate-100">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <h2 class="text-3xl font-bold text-center text-sky-700 mb-12">Tanyakan Apapun dengan!</h2>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <p class="text-slate-600 text-sm mb-4">Anda punya pertanyaan seputar ASN, materi tes, atau tips belajar? Tuliskan pertanyaan Anda di bawah ini dan dapatkan jawaban instan dari AI kami.</p>
+                    <textarea id="aiPromptInput" class="w-full p-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm mb-4" rows="4" placeholder="Contoh: Siapa presiden ke-8 Indonesia?"></textarea>
+                    <button id="getAiResponseBtn" class="w-full px-6 py-3 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-colors font-semibold flex items-center justify-center">
+                        <span id="buttonText">Dapatkan Jawaban</span>
+                        <span id="loadingSpinner" class="loading-spinner ml-2 hidden"></span>
+                    </button>
+                    <div id="aiResponseOutput" class="ai-response-box p-4 mt-6 rounded-md text-slate-700 text-sm leading-relaxed hidden">
+                        </div>
+                    <p class="text-xs text-slate-500 mt-4">
+                        <span class="font-semibold">Catatan:</span> Ini dibuat oleh Faitha Eros Perdana dengan versi sederhana, jadi akan terus berkembang seiringnya waktu.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-6 bg-slate-200 text-center text-slate-600 text-sm">
+            <p>&copy; <span id="currentYearFooter"></span> Pejuang ASN Interaktif. Semua Hak Dilindungi.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('currentYearFooter').textContent = new Date().getFullYear();
+
+        const aiPromptInput = document.getElementById('aiPromptInput');
+        const getAiResponseBtn = document.getElementById('getAiResponseBtn');
+        const aiResponseOutput = document.getElementById('aiResponseOutput');
+        const buttonText = document.getElementById('buttonText');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        // Function to render basic Markdown to HTML
+        function renderMarkdown(markdownText) {
+            let html = markdownText;
+
+            // Handle bold text: **teks**
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            // Handle headings (H2 - H4, common in Gemini responses)
+            html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>'); // H3
+            html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');   // H2
+            html = html.replace(/^#### (.*$)/gm, '<h4>$1</h4>'); // H4
+
+
+            // Handle unordered lists: * item
+            // This is a simplified regex. For more robust parsing, state-based parsing is needed.
+            html = html.replace(/^\* (.*$)/gm, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>(\n<li>.*<\/li>)*)/g, '<ul>$1</ul>');
+
+            // Handle ordered lists: 1. item
+            html = html.replace(/^\d+\. (.*$)/gm, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>(\n<li>.*<\/li>)*)/g, (match) => {
+                if (!match.includes('<ul>')) { // Avoid turning unordered lists into ordered
+                    return '<ol>' + match + '</ol>';
+                }
+                return match;
+            });
+
+
+            // Handle double newlines for paragraphs
+            html = html.replace(/\n\n/g, '</p><p>');
+            // Wrap remaining single newlines as breaks, after handling double newlines
+            html = html.replace(/\n/g, '<br>');
+
+
+            // Ensure content is wrapped in paragraph tags if it's not already
+            if (!html.startsWith('<p>') && !html.startsWith('<h') && !html.startsWith('<ul') && !html.startsWith('<ol')) {
+                 html = '<p>' + html + '</p>';
+            }
+            html = html.replace(/<br><br>/g, '<br>'); // Clean up accidental double breaks from consecutive empty lines after paragraph split.
+            html = html.replace(/<\/p><p>/g, '</p><p>'); // Consolidate multiple paragraph breaks
+
+            return html;
+        }
+
+
+        getAiResponseBtn.addEventListener('click', async () => {
+            const prompt = aiPromptInput.value.trim();
+            if (!prompt) {
+                aiResponseOutput.innerHTML = '<p style="color: #dc2626;">Mohon masukkan pertanyaan Anda.</p>';
+                aiResponseOutput.classList.remove('hidden');
+                return;
+            }
+
+            // Show loading state
+            buttonText.textContent = 'Memuat...';
+            loadingSpinner.classList.remove('hidden');
+            getAiResponseBtn.disabled = true;
+            aiResponseOutput.classList.add('hidden');
+            aiResponseOutput.innerHTML = ''; // Clear previous content
+
+            try {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                // TEMPORARY: For local testing, replace "YOUR_GEMINI_API_KEY_HERE" with your actual Gemini API Key.
+                // REMEMBER TO SET IT BACK TO "" WHEN DEPLOYING TO CANVAS ENVIRONMENT.
+                const apiKey = "AIzaSyDXC6lBqmfIn48qCt1Ve_J-a7XZU-2mfPk"; // <--- Masukkan kunci API Anda di sini untuk pengujian lokal
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const rawText = result.candidates[0].content.parts[0].text;
+                    aiResponseOutput.innerHTML = renderMarkdown(rawText); // Render Markdown to HTML
+                    aiResponseOutput.classList.remove('hidden');
+                } else {
+                    aiResponseOutput.innerHTML = '<p style="color: #dc2626;">Maaf, saya tidak dapat memproses permintaan Anda saat ini. Silakan coba lagi.</p>';
+                    aiResponseOutput.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Error fetching AI response:', error);
+                aiResponseOutput.innerHTML = '<p style="color: #dc2626;">Terjadi kesalahan saat menghubungi AI. Silakan coba lagi nanti. Pastikan kunci API Anda benar jika pengujian lokal.</p>';
+                aiResponseOutput.classList.remove('hidden');
+            } finally {
+                // Reset button state
+                buttonText.textContent = 'Dapatkan Jawaban';
+                loadingSpinner.classList.add('hidden');
+                getAiResponseBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

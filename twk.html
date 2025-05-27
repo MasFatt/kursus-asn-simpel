@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catatan Interaktif Pejuang ASN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            border-color: #0284c7; /* sky-600 */
+            color: #0284c7;
+            font-weight: 600;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .keyword-tag {
+            background-color: #e0f2fe; /* sky-100 */
+            border: 1px solid #7dd3fc; /* sky-300 */
+            color: #0c4a6e; /* sky-800 */
+        }
+        .option-button {
+            transition: background-color 0.2s ease;
+        }
+        .option-button:hover {
+            background-color: #f0f9ff; /* sky-50 */
+        }
+        .feedback-correct {
+            color: #16a34a; /* green-600 */
+        }
+        .feedback-incorrect {
+            color: #dc2626; /* red-600 */
+        }
+        #fireworksCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            pointer-events: none; /* Allows clicks to pass through */
+            display: none; /* Initially hidden */
+        }
+        /* Style for the sticky progress popup */
+        #quizProgressPopup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #0284c7; /* sky-600 */
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            font-size: 0.9rem;
+            display: none; /* Hidden by default, shown when quiz starts */
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        #quizProgressPopup p {
+            margin: 0;
+            line-height: 1.4;
+        }
+        #quizProgressPopup.show {
+            display: flex;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-100 text-slate-800">
+    <canvas id="fireworksCanvas"></canvas>
+
+    <div id="quizProgressPopup" class="hidden">
+        <p>Progres Kuis Saat Ini:</p>
+        <p>Dijawab: <strong id="answeredQuestions">0</strong> / <span id="totalQuestions">0</span></p>
+        <p>Benar: <strong id="correctAnswers">0</strong> | Salah: <strong id="incorrectAnswers">0</strong></p>
+    </div>
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-5xl">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-sky-700">Catatan Interaktif Pejuang ASN (TWK)</h1>
+            <p class="mt-2 text-slate-600 text-sm sm:text-base">
+                Aplikasi interaktif ini dirancang untuk membantu Anda memahami dan menguasai lima aspek penting dalam seleksi ASN berdasarkan 'Catatan Kilat Pejuang ASN'. Pilih aspek yang ingin Anda pelajari, baca definisinya, pahami kata kuncinya, lalu uji pemahaman Anda dengan contoh soal interaktif.
+            </p>
+        </header>
+
+        <nav class="mb-8">
+            <ul class="flex flex-wrap justify-center border-b border-slate-300">
+                <li class="mr-1 sm:mr-2">
+                    <button data-tab="integritas" class="tab-button active inline-block py-3 px-3 sm:px-4 text-slate-600 hover:text-sky-600 border-b-2 border-transparent">Integritas</button>
+                </li>
+                <li class="mr-1 sm:mr-2">
+                    <button data-tab="nasionalisme" class="tab-button inline-block py-3 px-3 sm:px-4 text-slate-600 hover:text-sky-600 border-b-2 border-transparent">Nasionalisme</button>
+                </li>
+                <li class="mr-1 sm:mr-2">
+                    <button data-tab="bela_negara" class="tab-button inline-block py-3 px-3 sm:px-4 text-slate-600 hover:text-sky-600 border-b-2 border-transparent">Bela Negara</button>
+                </li>
+                <li class="mr-1 sm:mr-2">
+                    <button data-tab="pilar_negara" class="tab-button inline-block py-3 px-3 sm:px-4 text-slate-600 hover:text-sky-600 border-b-2 border-transparent">Pilar Negara</button>
+                </li>
+                <li>
+                    <button data-tab="bahasa_indonesia" class="tab-button inline-block py-3 px-3 sm:px-4 text-slate-600 hover:text-sky-600 border-b-2 border-transparent">Bahasa Indonesia</button>
+                </li>
+            </ul>
+        </nav>
+
+        <main id="contentArea">
+            <section id="integritas" class="content-section active bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold text-sky-600 mb-4">1. Aspek Integritas</h2>
+                <p class="mb-1 text-sm text-slate-500">Pelajari lebih lanjut tentang aspek Integritas dan uji pemahaman Anda.</p>
+                
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Definisi Singkat</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Integritas adalah bertindak secara konsisten antara apa yang dikatakan dengan tingkah lakunya sesuai nilai-nilai yang dianut (nilai kode etik di tempat kerja, nilai masyarakat, atau nilai moral pribadi). Ini mencakup kejujuran, tanggung jawab, disiplin, antikorupsi, dan menjunjung tinggi etika.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Kata Kunci Utama</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Jujur</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Tanggung Jawab</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Disiplin</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Konsisten</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Antikorupsi</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Gratifikasi</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Benturan Kepentingan</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Etika</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Moral</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Amanah</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Berani</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Peduli</span>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-3">Contoh Soal Interaktif</h3>
+                    <p class="mb-3 text-slate-600 text-sm" id="question-text-integritas"></p>
+                    <div class="space-y-2 mb-3" id="options-integritas"></div>
+                    <div id="feedback-integritas" class="text-sm font-medium p-3 rounded-md bg-slate-50 hidden"></div>
+                    <div id="trick-integritas" class="mt-3 p-3 bg-sky-50 border-l-4 border-sky-500 text-sky-700 rounded-md text-sm hidden">
+                        <h4 class="font-semibold mb-1">Trik Menjawab Cepat:</h4>
+                        <ul class="list-disc list-inside space-y-1" id="trick-list-integritas"></ul>
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        <button id="prev-integritas" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors hidden">Soal Sebelumnya</button>
+                        <button id="next-integritas" class="px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-colors">Soal Berikutnya</button>
+                    </div>
+                    <p class="mt-2 text-sm text-slate-500" id="question-counter-integritas"></p>
+                </div>
+            </section>
+
+            <section id="nasionalisme" class="content-section bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold text-sky-600 mb-4">2. Aspek Nasionalisme</h2>
+                 <p class="mb-1 text-sm text-slate-500">Pelajari lebih lanjut tentang aspek Nasionalisme dan uji pemahaman Anda.</p>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Definisi Singkat</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Nasionalisme adalah suatu sikap politik atau pemahaman dari masyarakat suatu bangsa yang memiliki keselarasan kebudayaan dan wilayah, serta memiliki kesamaan cita-cita dan tujuan. Sehingga masyarakat suatu bangsa tersebut merasakan adanya kesetiaan yang mendalam terhadap bangsa itu sendiri. Ini berarti mengutamakan kepentingan nasional di atas kepentingan pribadi atau golongan, cinta tanah air, dan bangga sebagai bangsa Indonesia.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Kata Kunci Utama</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Kepentingan Nasional/Publik</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Persatuan dan Kesatuan</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Bhinneka Tunggal Ika</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Cinta Tanah Air</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Rela Berkorban</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Pancasila</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">UUD 1945</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">NKRI</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Wawasan Kebangsaan</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Gotong Royong</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Toleransi</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Produk Dalam Negeri</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Kedaulatan</span>
+                    </div>
+                </div>
+                
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-3">Contoh Soal Interaktif</h3>
+                    <p class="mb-3 text-slate-600 text-sm" id="question-text-nasionalisme"></p>
+                    <div class="space-y-2 mb-3" id="options-nasionalisme"></div>
+                    <div id="feedback-nasionalisme" class="text-sm font-medium p-3 rounded-md bg-slate-50 hidden"></div>
+                    <div id="trick-nasionalisme" class="mt-3 p-3 bg-sky-50 border-l-4 border-sky-500 text-sky-700 rounded-md text-sm hidden">
+                        <h4 class="font-semibold mb-1">Trik Menjawab Cepat:</h4>
+                        <ul class="list-disc list-inside space-y-1" id="trick-list-nasionalisme"></ul>
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        <button id="prev-nasionalisme" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors hidden">Soal Sebelumnya</button>
+                        <button id="next-nasionalisme" class="px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-colors">Soal Berikutnya</button>
+                    </div>
+                    <p class="mt-2 text-sm text-slate-500" id="question-counter-nasionalisme"></p>
+                </div>
+            </section>
+
+            <section id="bela_negara" class="content-section bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold text-sky-600 mb-4">3. Aspek Bela Negara</h2>
+                <p class="mb-1 text-sm text-slate-500">Pelajari lebih lanjut tentang aspek Bela Negara dan uji pemahaman Anda.</p>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Definisi Singkat</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Bela Negara adalah tekad, sikap, dan perilaku serta tindakan warga negara, baik secara perseorangan maupun kolektif dalam menjaga kedaulatan negara, keutuhan wilayah, dan keselamatan bangsa dan negara yang dijiwai oleh kecintaannya kepada Negara Kesatuan Republik Indonesia (NKRI) yang berdasarkan Pancasila dan UUD NRI Tahun 1945 dalam menjamin kelangsungan hidup bangsa Indonesia dan Negara dari berbagai ancaman.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Kata Kunci Utama</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Kedaulatan NKRI</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Keutuhan Wilayah</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Keselamatan Bangsa</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Ancaman (Militer & Non-Militer)</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Pancasila</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">UUD 1945</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Cinta Tanah Air</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Kesadaran Berbangsa & Bernegara</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Rela Berkorban</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Kemampuan Awal Bela Negara</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Pengabdian Sesuai Profesi</span>
+                    </div>
+                </div>
+                
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-3">Contoh Soal Interaktif</h3>
+                    <p class="mb-3 text-slate-600 text-sm" id="question-text-bela_negara"></p>
+                    <div class="space-y-2 mb-3" id="options-bela_negara"></div>
+                    <div id="feedback-bela_negara" class="text-sm font-medium p-3 rounded-md bg-slate-50 hidden"></div>
+                    <div id="trick-bela_negara" class="mt-3 p-3 bg-sky-50 border-l-4 border-sky-500 text-sky-700 rounded-md text-sm hidden">
+                        <h4 class="font-semibold mb-1">Trik Menjawab Cepat:</h4>
+                        <ul class="list-disc list-inside space-y-1" id="trick-list-bela_negara"></ul>
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        <button id="prev-bela_negara" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors hidden">Soal Sebelumnya</button>
+                        <button id="next-bela_negara" class="px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-colors">Soal Berikutnya</button>
+                    </div>
+                    <p class="mt-2 text-sm text-slate-500" id="question-counter-bela_negara"></p>
+                </div>
+            </section>
+
+            <section id="pilar_negara" class="content-section bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold text-sky-600 mb-4">4. Aspek Pilar Negara</h2>
+                <p class="mb-1 text-sm text-slate-500">Pelajari lebih lanjut tentang aspek Pilar Negara dan uji pemahaman Anda.</p>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Definisi Singkat</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Empat Pilar Kebangsaan Indonesia adalah tiang penyangga yang kokoh agar rakyat Indonesia merasa nyaman, aman, tenteram, dan sejahtera serta terhindar dari berbagai macam persoalan. Keempat pilar tersebut adalah: Pancasila, UUD NRI Tahun 1945, Negara Kesatuan Republik Indonesia (NKRI), dan Bhinneka Tunggal Ika.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Kata Kunci Utama</h3>
+                    <p class="text-sm text-slate-600 mb-1"><strong>Pancasila:</strong> Nilai Ketuhanan, Kemanusiaan, Persatuan, Kerakyatan/Musyawarah, Keadilan Sosial.</p>
+                    <p class="text-sm text-slate-600 mb-1"><strong>UUD 1945:</strong> Pembukaan, pasal-pasal (hak & kewajiban warga negara, lembaga negara, HAM).</p>
+                    <p class="text-sm text-slate-600 mb-1"><strong>NKRI:</strong> Kedaulatan, keutuhan wilayah, wawasan nusantara, separatisme.</p>
+                    <p class="text-sm text-slate-600"><strong>Bhinneka Tunggal Ika:</strong> Toleransi, keberagaman suku, agama, ras, budaya, persatuan.</p>
+                </div>
+                
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-3">Contoh Soal Interaktif (Pancasila)</h3>
+                    <p class="mb-3 text-slate-600 text-sm" id="question-text-pilar_negara"></p>
+                    <div class="space-y-2 mb-3" id="options-pilar_negara"></div>
+                    <div id="feedback-pilar_negara" class="text-sm font-medium p-3 rounded-md bg-slate-50 hidden"></div>
+                    <div id="trick-pilar_negara" class="mt-3 p-3 bg-sky-50 border-l-4 border-sky-500 text-sky-700 rounded-md text-sm hidden">
+                        <h4 class="font-semibold mb-1">Trik Menjawab Cepat:</h4>
+                        <ul class="list-disc list-inside space-y-1" id="trick-list-pilar_negara"></ul>
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        <button id="prev-pilar_negara" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors hidden">Soal Sebelumnya</button>
+                        <button id="next-pilar_negara" class="px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-colors">Soal Berikutnya</button>
+                    </div>
+                    <p class="mt-2 text-sm text-slate-500" id="question-counter-pilar_negara"></p>
+                </div>
+            </section>
+
+            <section id="bahasa_indonesia" class="content-section bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold text-sky-600 mb-4">5. Aspek Bahasa Indonesia</h2>
+                <p class="mb-1 text-sm text-slate-500">Pelajari lebih lanjut tentang aspek Bahasa Indonesia dan uji pemahaman Anda.</p>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Definisi Singkat</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Kemampuan menggunakan bahasa Indonesia yang baik dan benar sesuai dengan kaidah tata bahasa, Ejaan Yang Disempurnakan (EYD)/Pedoman Umum Ejaan Bahasa Indonesia (PUEBI), pilihan kata (diksi), dan penyusunan kalimat efektif dalam konteks formal.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Kata Kunci Utama</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Kalimat Baku</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Kalimat Efektif</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Ejaan (PUEBI)</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Tanda Baca</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Pilihan Kata (Diksi)</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Ide Pokok</span>
+                        <span class="keyword-tag text-xs px-3 py-1 rounded-full">Kata Serapan</span>
+                    </div>
+                </div>
+                
+                <div class="border-t border-slate-200 pt-6">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-3">Contoh Soal Interaktif (Ejaan)</h3>
+                    <p class="mb-3 text-slate-600 text-sm" id="question-text-bahasa_indonesia"></p>
+                    <div class="space-y-2 mb-3" id="options-bahasa_indonesia"></div>
+                    <div id="feedback-bahasa_indonesia" class="text-sm font-medium p-3 rounded-md bg-slate-50 hidden"></div>
+                    <div id="trick-bahasa_indonesia" class="mt-3 p-3 bg-sky-50 border-l-4 border-sky-500 text-sky-700 rounded-md text-sm hidden">
+                        <h4 class="font-semibold mb-1">Trik Menjawab Cepat:</h4>
+                        <ul class="list-disc list-inside space-y-1" id="trick-list-bahasa_indonesia"></ul>
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        <button id="prev-bahasa_indonesia" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors hidden">Soal Sebelumnya</button>
+                        <button id="next-bahasa_indonesia" class="px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-colors">Soal Berikutnya</button>
+                    </div>
+                    <p class="mt-2 text-sm text-slate-500" id="question-counter-bahasa_indonesia"></p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="mt-12 pt-6 border-t border-slate-300 text-center">
+            <p class="text-sm text-slate-500">&copy; <span id="currentYear"></span> Pejuang ASN Interaktif. Semoga Sukses!</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const contentSections = document.querySelectorAll('.content-section');
+            const currentYearEl = document.getElementById('currentYear');
+            currentYearEl.textContent = new Date().getFullYear();
+
+            // Quiz progress elements
+            const quizProgressPopup = document.getElementById('quizProgressPopup');
+            const answeredQuestionsEl = document.getElementById('answeredQuestions');
+            const totalQuestionsEl = document.getElementById('totalQuestions');
+            const correctAnswersEl = document.getElementById('correctAnswers');
+            const incorrectAnswersEl = document.getElementById('incorrectAnswers');
+
+            // Quiz data and logic
+            const quizzes = {
+                integritas: {
+                    questions: [
+                        {
+                            questionText: "Anda adalah seorang bendahara dan menemukan adanya selisih dana kas yang cukup signifikan setelah diaudit. Atasan Anda meminta Anda untuk 'mengamankan' temuan tersebut agar tidak mencuat ke publik demi menjaga nama baik instansi, dan menjanjikan kompensasi pribadi untuk Anda. Sikap Anda adalah...",
+                            options: [
+                                { text: "A. Mengikuti arahan atasan karena loyalitas dan demi nama baik instansi.", isCorrect: false },
+                                { text: "B. Menolak secara halus dan menyarankan agar masalah diselesaikan secara internal tanpa dilaporkan.", isCorrect: false },
+                                { text: "C. Melaporkan temuan tersebut apa adanya kepada pihak yang berwenang sesuai prosedur, meskipun berisiko.", isCorrect: true },
+                                { text: "D. Meminta waktu untuk mempertimbangkan tawaran atasan.", isCorrect: false }
+                            ],
+                            trickText: ["Cari Pilihan Paling Ideal: Pilih jawaban yang menunjukkan sikap paling jujur, berprinsip, taat aturan, dan berani menanggung risiko demi kebenaran.", "Hindari Kompromi Negatif: Jawaban yang menunjukkan kompromi terhadap kesalahan, menutupi masalah, atau mencari keuntungan pribadi biasanya salah.", "Fokus pada Aturan dan Prosedur: Tindakan yang sesuai dengan peraturan perundang-undangan dan prosedur yang berlaku adalah pilihan terbaik."],
+                            answered: false, // Track if this question has been answered
+                            isCorrectlyAnswered: null // null: not answered, true: correct, false: incorrect
+                        },
+                        {
+                            questionText: "Seorang rekan kerja Anda sering datang terlambat dan meminta Anda untuk menutupi kebiasaannya tersebut di hadapan atasan. Apa yang akan Anda lakukan?",
+                            options: [
+                                { text: "A. Menutupinya karena Anda tidak ingin merusak hubungan dengan rekan kerja.", isCorrect: false },
+                                { text: "B. Memberitahu rekan kerja Anda agar lebih berhati-hati dan tidak mengulangi perbuatannya.", isCorrect: false },
+                                { text: "C. Melaporkan kebiasaan tersebut kepada atasan agar ditindaklanjuti sesuai peraturan.", isCorrect: true },
+                                { text: "D. Menyarankan rekan kerja untuk mencari alasan yang lebih logis.", isCorrect: false }
+                            ],
+                            trickText: ["Integritas berarti tidak mentolerir pelanggaran etika dan disiplin.", "Melaporkan pelanggaran adalah tindakan yang benar untuk menjaga lingkungan kerja yang profesional."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Anda menemukan uang di dalam gedung kantor tempat Anda bekerja. Tidak ada seorang pun yang mengklaim uang tersebut. Apa yang akan Anda lakukan?",
+                            options: [
+                                { text: "A. Menyimpannya karena tidak ada yang tahu.", isCorrect: false },
+                                { text: "B. Mengumumkan penemuan tersebut di papan pengumuman kantor dan menyerahkannya ke bagian keamanan atau HRD.", isCorrect: true },
+                                { text: "C. Membagi uang tersebut dengan rekan kerja yang ada di sekitar Anda.", isCorrect: false },
+                                { text: "D. Membiarkan uang tersebut di tempatnya sampai ada yang mencarinya.", isCorrect: false }
+                            ],
+                            trickText: ["Integritas menuntut kejujuran dan tanggung jawab.", "Mengembalikan barang temuan kepada pemiliknya atau pihak berwenang adalah wujud integritas."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Anda diberi tugas oleh atasan untuk menyelesaikan laporan penting. Namun, dalam prosesnya, Anda menemukan bahwa data yang diberikan tidak akurat. Apa yang Anda lakukan?",
+                            options: [
+                                { text: "A. Tetap melanjutkan laporan dengan data yang ada agar cepat selesai.", isCorrect: false },
+                                { text: "B. Melaporkan ketidakakuratan data kepada atasan dan meminta data yang benar, meskipun menunda pekerjaan.", isCorrect: true },
+                                { text: "C. Mengoreksi data sesuai perkiraan Anda agar laporan tetap akurat.", isCorrect: false },
+                                { text: "D. Menyampaikan laporan dengan catatan bahwa data mungkin tidak akurat.", isCorrect: false }
+                            ],
+                            trickText: ["Prioritaskan kebenaran dan akurasi data.", "Integritas berarti memastikan kualitas dan keandalan pekerjaan, bahkan jika itu berarti menunda penyelesaian."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Seorang kolega menawarkan tiket konser gratis kepada Anda sebagai 'tanda terima kasih' setelah Anda membantu menyelesaikan masalah teknis yang tidak terkait dengan pekerjaan resmi Anda. Apa yang Anda lakukan?",
+                            options: [
+                                { text: "A. Menerima tiket tersebut karena itu bukan gratifikasi terkait tugas pokok.", isCorrect: false },
+                                { text: "B. Menerima tiket dan kemudian membelikan kolega tersebut makanan sebagai balasan.", isCorrect: false },
+                                { text: "C. Menolak tawaran tersebut dengan sopan untuk menghindari potensi konflik kepentingan atau persepsi negatif.", isCorrect: true },
+                                { text: "D. Menerima tiket dan melaporkannya sebagai hadiah kecil kepada atasan.", isCorrect: false }
+                            ],
+                            trickText: ["Hindari segala bentuk gratifikasi atau pemberian yang dapat menimbulkan kesan tidak profesional atau konflik kepentingan, sekecil apapun itu."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Anda melihat seorang pejabat publik menggunakan fasilitas kantor (mobil dinas) untuk keperluan pribadi di luar jam kerja. Apa yang seharusnya Anda lakukan?",
+                            options: [
+                                { text: "A. Mengabaikannya karena itu bukan urusan Anda dan Anda tidak ingin mencari masalah.", isCorrect: false },
+                                { text: "B. Mencatat kejadian tersebut dan melaporkannya kepada unit pengawasan internal atau pihak berwenang yang relevan.", isCorrect: true },
+                                { text: "C. Menegur langsung pejabat tersebut secara pribadi.", isCorrect: false },
+                                { text: "D. Membicarakannya dengan rekan kerja lain untuk mencari tahu apakah ini hal yang biasa.", isCorrect: false }
+                            ],
+                            trickText: ["Integritas juga berarti berani menegakkan aturan dan melaporkan penyalahgunaan wewenang atau fasilitas publik sesuai prosedur yang berlaku."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        }
+                    ],
+                    currentQuestionIndex: 0
+                },
+                nasionalisme: {
+                    questions: [
+                        {
+                            questionText: "Di unit kerja Anda, terdapat program peningkatan penggunaan produk dalam negeri. Namun, beberapa rekan kerja lebih memilih menggunakan produk impor karena dianggap kualitasnya lebih baik dan harganya lebih kompetitif. Sikap Anda adalah...",
+                            options: [
+                                { text: "A. Ikut menggunakan produk impor karena kualitas dan harga lebih menguntungkan secara pribadi.", isCorrect: false },
+                                { text: "B. Tetap menggunakan produk dalam negeri meskipun kualitasnya sedikit di bawah dan harganya lebih mahal sebagai bentuk dukungan.", isCorrect: false },
+                                { text: "C. Mengajak rekan kerja untuk tetap memprioritaskan produk dalam negeri sambil memberikan masukan kepada produsen lokal untuk peningkatan kualitas.", isCorrect: true },
+                                { text: "D. Tidak peduli dengan pilihan rekan kerja karena itu hak masing-masing individu.", isCorrect: false }
+                            ],
+                            trickText: ["Utamakan Kepentingan Bangsa: Pilih jawaban yang menunjukkan tindakan nyata mendukung kepentingan nasional.", "Cari Solusi Konstruktif: Jika ada dilema, cari jawaban yang aktif mencari solusi untuk kemajuan bangsa.", "Hindari Sikap Apatis atau Mementingkan Diri Sendiri."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Dalam rapat koordinasi antar daerah, terjadi perbedaan pendapat yang tajam mengenai alokasi anggaran yang berpotensi menimbulkan ketegangan. Sebagai ASN, peran Anda dalam situasi ini adalah...",
+                            options: [
+                                { text: "A. Membela kepentingan daerah Anda sendiri secara maksimal tanpa peduli daerah lain.", isCorrect: false },
+                                { text: "B. Bersikap netral dan tidak ikut campur dalam perdebatan.", isCorrect: false },
+                                { text: "C. Mencari titik temu dan mendorong musyawarah untuk mencapai kesepakatan demi kepentingan bersama.", isCorrect: true },
+                                { text: "D. Meninggalkan rapat jika perdebatan semakin memanas.", isCorrect: false }
+                            ],
+                            trickText: ["Nasionalisme berarti menjaga persatuan dan kesatuan bangsa.", "Dalam perbedaan, cari solusi musyawarah mufakat yang menguntungkan semua pihak."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Anda ditugaskan untuk menyusun materi sosialisasi tentang pentingnya menjaga kebersihan lingkungan. Untuk menarik perhatian masyarakat, Anda berencana menggunakan contoh-contoh dari luar negeri. Sikap Anda adalah...",
+                            options: [
+                                { text: "A. Hanya menggunakan contoh dari luar negeri karena lebih modern.", isCorrect: false },
+                                { text: "B. Menggabungkan contoh dari luar negeri dengan kearifan lokal Indonesia agar pesan lebih relevan dan mudah diterima.", isCorrect: true },
+                                { text: "C. Fokus pada contoh dari luar negeri saja karena lebih universal.", isCorrect: false },
+                                { text: "D. Mengabaikan contoh dari luar negeri dan hanya fokus pada contoh lokal.", isCorrect: false }
+                            ],
+                            trickText: ["Nasionalisme tidak berarti menolak hal-hal dari luar, tetapi mengadaptasi dan memadukannya dengan nilai-nilai dan konteks lokal untuk memperkaya bangsa."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Saat ada perayaan hari besar nasional, sebagian rekan kerja Anda menganggapnya sebagai formalitas belaka dan tidak antusias. Apa yang Anda lakukan?",
+                            options: [
+                                { text: "A. Ikut-ikutan tidak antusias karena itu hanya formalitas.", isCorrect: false },
+                                { text: "B. Bersikap biasa saja karena setiap orang punya pandangan masing-masing.", isCorrect: false },
+                                { text: "C. Berusaha menunjukkan antusiasme dan mengajak rekan kerja lain untuk memaknai perayaan tersebut sebagai bentuk cinta tanah air.", isCorrect: true },
+                                { text: "D. Melaporkan rekan kerja yang tidak antusias kepada atasan.", isCorrect: false }
+                            ],
+                            trickText: ["Nasionalisme adalah tentang menumbuhkan rasa cinta dan bangga pada negara.", "Tunjukkan sikap positif dan ajak orang lain untuk merasakan hal yang sama."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Anda mendengar beberapa warga mengeluhkan lambatnya penanganan masalah di daerah perbatasan. Sebagai ASN, bagaimana Anda menyikapi hal ini?",
+                            options: [
+                                { text: "A. Menganggap itu masalah pemerintah pusat dan bukan tanggung jawab Anda.", isCorrect: false },
+                                { text: "B. Mencari tahu akar masalahnya dan berkoordinasi dengan pihak terkait untuk mencari solusi, meskipun itu di luar tugas pokok Anda.", isCorrect: true },
+                                { text: "C. Menyalahkan warga karena tidak proaktif.", isCorrect: false },
+                                { text: "D. Menyampaikan keluhan tersebut kepada media massa agar mendapat perhatian.", isCorrect: false }
+                            ],
+                            trickText: ["Nasionalisme mendorong kepedulian terhadap seluruh wilayah NKRI, termasuk daerah terpencil atau perbatasan.", "Inisiatif untuk mencari solusi adalah wujud nyata."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Anda mendapatkan kesempatan untuk melanjutkan pendidikan di luar negeri. Setelah selesai, Anda ditawari pekerjaan dengan gaji tinggi di sana. Apa yang Anda lakukan?",
+                            options: [
+                                { text: "A. Menerima tawaran tersebut karena kesempatan tidak datang dua kali.", isCorrect: false },
+                                { text: "B. Kembali ke Indonesia dan mengabdikan ilmu yang didapat untuk kemajuan bangsa.", isCorrect: true },
+                                { text: "C. Meminta pemerintah Indonesia untuk memberikan gaji yang sama agar Anda mau kembali.", isCorrect: false },
+                                { text: "D. Tetap di luar negeri tetapi sesekali memberikan kontribusi jarak jauh untuk Indonesia.", isCorrect: false }
+                            ],
+                            trickText: ["Nasionalisme adalah tentang pengabdian kepada negara.", "Menggunakan ilmu yang didapat untuk membangun bangsa sendiri adalah prioritas."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        }
+                    ],
+                    currentQuestionIndex: 0
+                },
+                bela_negara: {
+                    questions: [
+                        {
+                            questionText: "Sebagai seorang ASN di bidang pelayanan publik, bentuk implementasi bela negara yang paling relevan dalam pekerjaan sehari-hari Anda adalah...",
+                            options: [
+                                { text: "A. Mengikuti pelatihan militer dasar secara sukarela.", isCorrect: false },
+                                { text: "B. Selalu menggunakan atribut negara dalam setiap kegiatan.", isCorrect: false },
+                                { text: "C. Memberikan pelayanan terbaik, cepat, dan tidak diskriminatif kepada masyarakat.", isCorrect: true },
+                                { text: "D. Aktif mengkritik kebijakan pemerintah yang dianggap merugikan.", isCorrect: false }
+                            ],
+                            trickText: ["Sesuaikan dengan Konteks Profesi: Bela negara bagi ASN tidak selalu berarti angkat senjata.", "Fokus pada Kontribusi Positif: Tindakan yang meningkatkan kualitas pelayanan adalah wujud bela negara.", "Hindari Jawaban Simbolis Semata."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Anda melihat adanya upaya penyebaran informasi palsu (hoaks) yang dapat memecah belah persatuan bangsa di media sosial. Sikap Anda adalah...",
+                            options: [
+                                { text: "A. Mengabaikannya karena itu bukan ranah Anda.", isCorrect: false },
+                                { text: "B. Ikut menyebarkan informasi tersebut untuk melihat reaksi orang lain.", isCorrect: false },
+                                { text: "C. Melaporkan akun penyebar hoaks dan memberikan klarifikasi dengan informasi yang benar.", isCorrect: true },
+                                { text: "D. Hanya mengingatkan teman-teman terdekat untuk tidak percaya hoaks.", isCorrect: false }
+                            ],
+                            trickText: ["Bela negara di era digital adalah melawan ancaman non-militer seperti hoaks.", "Bertindak aktif untuk melawan disinformasi adalah bentuk bela negara."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Dalam situasi darurat bencana alam, meskipun bukan bagian dari tim penanggulangan bencana, Anda sebagai ASN memiliki waktu luang. Apa yang Anda lakukan?",
+                            options: [
+                                { text: "A. Menunggu perintah resmi untuk membantu.", isCorrect: false },
+                                { text: "B. Mencari tahu cara untuk berkontribusi secara sukarela sesuai kemampuan Anda (misalnya, membantu logistik atau administrasi).", isCorrect: true },
+                                { text: "C. Fokus pada pekerjaan rutin Anda karena itu bukan tugas Anda.", isCorrect: false },
+                                { text: "D. Mengunggah foto dan video situasi bencana di media sosial.", isCorrect: false }
+                            ],
+                            trickText: ["Bela negara juga mencakup kepedulian dan partisipasi aktif dalam membantu sesama warga negara, terutama dalam situasi darurat."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Pemerintah mengeluarkan kebijakan baru yang memerlukan partisipasi aktif masyarakat dalam menjaga keamanan lingkungan. Sebagai warga negara yang sadar bela negara, Anda akan...",
+                            options: [
+                                { text: "A. Menunggu warga lain untuk memulai inisiatif.", isCorrect: false },
+                                { text: "B. Berpartisipasi aktif dalam kegiatan siskamling atau program keamanan lingkungan lainnya.", isCorrect: true },
+                                { text: "C. Mengkritik kebijakan tersebut karena dianggap membebani masyarakat.", isCorrect: false },
+                                { text: "D. Hanya menjaga keamanan rumah pribadi Anda.", isCorrect: false }
+                            ],
+                            trickText: ["Bela negara adalah kewajiban setiap warga negara.", "Partisipasi aktif dalam menjaga keamanan lingkungan adalah wujud nyata."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Anda menemukan adanya praktik pungutan liar (pungli) di lingkungan pelayanan publik. Apa tindakan yang paling tepat sebagai wujud bela negara?",
+                            options: [
+                                { text: "A. Mengabaikannya karena takut menjadi target.", isCorrect: false },
+                                { text: "B. Ikut melakukan pungli agar tidak ketinggalan.", isCorrect: false },
+                                { text: "C. Melaporkan praktik pungli tersebut kepada pihak berwenang melalui saluran resmi.", isCorrect: true },
+                                { text: "D. Merekam dan menyebarkan video pungli di media sosial tanpa melaporkan ke pihak berwenang.", isCorrect: false }
+                            ],
+                            trickText: ["Melawan praktik korupsi dan pungli adalah bentuk bela negara karena merusak integritas dan kepercayaan publik terhadap negara."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Sebagai ASN, Anda dihadapkan pada pilihan untuk menggunakan anggaran secara efisien atau menghabiskan seluruh anggaran demi kepentingan proyek. Sikap bela negara Anda adalah...",
+                            options: [
+                                { text: "A. Menghabiskan seluruh anggaran agar proyek terlihat besar.", isCorrect: false },
+                                { text: "B. Menggunakan anggaran secara efisien dan transparan, menghemat dana negara untuk kepentingan yang lebih besar.", isCorrect: true },
+                                { text: "C. Mengalihkan sebagian anggaran untuk kepentingan pribadi.", isCorrect: false },
+                                { text: "D. Mengikuti kebiasaan lama yang menghabiskan anggaran.", isCorrect: false }
+                            ],
+                            trickText: ["Bela negara juga berarti menjaga dan mengelola sumber daya negara dengan penuh tanggung jawab dan efisiensi, demi kemajuan bangsa."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        }
+                    ],
+                    currentQuestionIndex: 0
+                },
+                pilar_negara: {
+                    questions: [
+                        {
+                            questionText: "Sikap seorang ASN yang mencerminkan pengamalan sila Kemanusiaan yang Adil dan Beradab dalam memberikan pelayanan kepada masyarakat adalah...",
+                            options: [
+                                { text: "A. Memberikan pelayanan khusus kepada masyarakat dari daerah asalnya.", isCorrect: false },
+                                { text: "B. Memperlakukan semua masyarakat secara sama tanpa membedakan status sosial, ekonomi, maupun agama.", isCorrect: true },
+                                { text: "C. Mendahulukan pelayanan kepada masyarakat yang memberikan imbalan lebih.", isCorrect: false },
+                                { text: "D. Hanya melayani masyarakat yang bersikap sopan dan ramah.", isCorrect: false }
+                            ],
+                            trickText: ["Pahami Esensi Tiap Pilar: Cocokkan narasi soal dengan nilai inti dari masing-masing sila Pancasila atau prinsip dasar pilar lainnya.", "Sila Kemanusiaan berarti tidak diskriminatif, adil, dan menghargai martabat."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Dalam musyawarah desa untuk menentukan prioritas pembangunan, terjadi perbedaan pendapat yang signifikan. Sebagai ASN yang hadir, Anda akan...",
+                            options: [
+                                { text: "A. Memaksakan pendapat Anda karena Anda lebih paham peraturan.", isCorrect: false },
+                                { text: "B. Mencari jalan tengah dan mendorong tercapainya mufakat yang mengakomodasi kepentingan bersama, sesuai sila Kerakyatan.", isCorrect: true },
+                                { text: "C. Meninggalkan musyawarah jika tidak ada titik temu.", isCorrect: false },
+                                { text: "D. Mendukung kelompok mayoritas tanpa mempertimbangkan pendapat minoritas.", isCorrect: false }
+                            ],
+                            trickText: ["Sila Kerakyatan mengedepankan musyawarah untuk mencapai mufakat.", "Peran ASN adalah memfasilitasi proses tersebut demi kepentingan bersama."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Fenomena radikalisme dan intoleransi semakin marak di beberapa daerah. Sebagai ASN, bagaimana Anda menerapkan nilai Bhinneka Tunggal Ika untuk mengatasi masalah ini?",
+                            options: [
+                                { text: "A. Mengabaikan kelompok radikal dan fokus pada tugas Anda.", isCorrect: false },
+                                { text: "B. Mengadakan dialog antarumat beragama dan suku untuk mempromosikan toleransi dan saling pengertian.", isCorrect: true },
+                                { text: "C. Melarang kegiatan keagamaan atau adat yang berbeda dari mayoritas.", isCorrect: false },
+                                { text: "D. Melaporkan semua kelompok yang berbeda kepada pihak berwenang.", isCorrect: false }
+                            ],
+                            trickText: ["Bhinneka Tunggal Ika menekankan persatuan dalam keberagaman.", "ASN harus menjadi agen perekat bangsa dengan mempromosikan toleransi dan dialog."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Anda menemukan adanya upaya dari sekelompok orang untuk memisahkan diri dari NKRI dengan alasan otonomi daerah yang tidak terpenuhi. Sikap Anda sebagai ASN adalah...",
+                            options: [
+                                { text: "A. Mendukung upaya tersebut jika memang ada ketidakadilan.", isCorrect: false },
+                                { text: "B. Menjelaskan pentingnya menjaga keutuhan NKRI dan mencari solusi permasalahan melalui jalur konstitusional.", isCorrect: true },
+                                { text: "C. Bersikap netral karena itu adalah masalah politik.", isCorrect: false },
+                                { text: "D. Ikut menyuarakan aspirasi kelompok tersebut.", isCorrect: false }
+                            ],
+                            trickText: ["NKRI adalah harga mati.", "ASN harus berpegang teguh pada prinsip ini dan berupaya menjaga keutuhan wilayah melalui pendekatan persuasif dan konstitusional."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Pemerintah berencana membangun infrastruktur penting yang akan berdampak pada penggusuran beberapa rumah warga. Bagaimana Anda sebagai ASN yang terlibat dalam proyek ini menerapkan nilai Keadilan Sosial?",
+                            options: [
+                                { text: "A. Melaksanakan penggusuran sesuai jadwal tanpa mempertimbangkan dampak sosial.", isCorrect: false },
+                                { text: "B. Memastikan adanya musyawarah dengan warga terdampak, memberikan ganti rugi yang layak, dan mencari solusi relokasi yang manusiawi.", isCorrect: true },
+                                { text: "C. Mempercepat proses agar proyek cepat selesai.", isCorrect: false },
+                                { text: "D. Mencari cara untuk menghindari ganti rugi kepada warga.", isCorrect: false }
+                            ],
+                            trickText: ["Sila Keadilan Sosial menuntut keadilan bagi seluruh rakyat.", "Dalam pembangunan, pastikan hak-hak warga terpenuhi dan dampak negatif diminimalisir."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Sebagai ASN, Anda diminta untuk menyusun peraturan daerah yang baru. Dalam prosesnya, Anda menemukan bahwa peraturan tersebut berpotensi bertentangan dengan UUD 1945. Apa yang Anda lakukan?",
+                            options: [
+                                { text: "A. Tetap menyusun peraturan tersebut sesuai permintaan atasan.", isCorrect: false },
+                                { text: "B. Memberikan masukan dan saran agar peraturan daerah tersebut disesuaikan dengan UUD 1945 sebagai hukum dasar.", isCorrect: true },
+                                { text: "C. Mengabaikan potensi pertentangan tersebut karena UUD 1945 adalah urusan pusat.", isCorrect: false },
+                                { text: "D. Mencari celah hukum agar peraturan tersebut tetap bisa disahkan.", isCorrect: false }
+                            ],
+                            trickText: ["UUD 1945 adalah hukum dasar negara.", "Setiap peraturan di bawahnya harus selaras dan tidak boleh bertentangan.", "ASN harus memastikan kepatuhan terhadap konstitusi."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        }
+                    ],
+                    currentQuestionIndex: 0
+                },
+                bahasa_indonesia: {
+                    questions: [
+                        {
+                            questionText: "Penulisan kalimat berikut yang sesuai dengan kaidah PUEBI adalah...",
+                            options: [
+                                { text: "A. Dia membeli obat di Apotik Sehat Jaya.", isCorrect: false },
+                                { text: "B. Selamat Hari Natal dan Tahun Baru.", isCorrect: true },
+                                { text: "C. Pertandingan itu akan di selenggarakan besok pagi.", isCorrect: false },
+                                { text: "D. Meskipun sibuk, namun ia tetap mengerjakan tugasnya.", isCorrect: false }
+                            ],
+                            trickText: ["Fokus pada Kesalahan Umum: Huruf kapital, kata depan vs. imbuhan, pemborosan kata, tanda baca.", "Eliminasi Jawaban yang Jelas Salah.", "Penjelasan: A salah ('Apotik' -> 'apotek'). C salah ('di selenggarakan' -> 'diselenggarakan'). D salah (pemborosan konjungsi 'meskipun... namun...')."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Manakah kalimat berikut yang menggunakan pilihan kata (diksi) yang tepat?",
+                            options: [
+                                { text: "A. Ibu memasak nasi di dapur dengan api yang membara.", isCorrect: false },
+                                { text: "B. Para hadirin sekalian, mari kita mulai acara ini.", isCorrect: false },
+                                { text: "C. Karyawan itu bekerja keras demi meningkatkan produktivitas perusahaan.", isCorrect: true },
+                                { text: "D. Dia sangat pintar sekali dalam pelajaran matematika.", isCorrect: false }
+                            ],
+                            trickText: ["Diksi yang tepat berarti memilih kata yang paling sesuai dengan makna dan konteks.", "Hindari kata-kata mubazir atau tidak lazim. 'Hadirin sekalian' dan 'sangat pintar sekali' adalah contoh pemborosan."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Kalimat berikut yang merupakan kalimat efektif adalah...",
+                            options: [
+                                { text: "A. Untuk menghindari hal-hal yang tidak diinginkan, maka kita harus berhati-hati.", isCorrect: false },
+                                { text: "B. Walaupun ia miskin, tetapi ia tidak pernah mengeluh.", isCorrect: false },
+                                { text: "C. Mahasiswa baru itu sangat rajin sekali belajar.", isCorrect: false },
+                                { text: "D. Pembangunan jalan tol ini membutuhkan dana yang besar.", isCorrect: true }
+                            ],
+                            trickText: ["Kalimat efektif adalah kalimat yang singkat, padat, jelas, dan tidak mengandung pemborosan kata atau struktur yang berlebihan.", "Hindari konjungsi ganda atau kata keterangan yang berlebihan."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Penggunaan tanda baca koma (,) yang benar terdapat pada kalimat...",
+                            options: [
+                                { text: "A. Saya suka apel, jeruk dan pisang.", isCorrect: false },
+                                { text: "B. Oleh karena itu, kita harus bekerja keras.", isCorrect: true },
+                                { text: "C. Ayah berkata 'Saya akan pergi sekarang'.", isCorrect: false },
+                                { text: "D. Dia lahir pada tanggal 17 Agustus 1945 di Jakarta.", isCorrect: false }
+                            ],
+                            trickText: ["Perhatikan aturan penggunaan koma: setelah kata penghubung antar kalimat (oleh karena itu, jadi, dengan demikian), sebelum konjungsi 'dan' jika ada lebih dari dua unsur, atau untuk memisahkan anak kalimat dari induk kalimat."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Kata serapan yang penulisannya sudah sesuai dengan kaidah Bahasa Indonesia adalah...",
+                            options: [
+                                { text: "A. Aktifitas", isCorrect: false },
+                                { text: "B. Kwalitas", isCorrect: false },
+                                { text: "C. Sistem", isCorrect: true },
+                                { text: "D. Pebruari", isCorrect: false }
+                            ],
+                            trickText: ["Banyak kata serapan dari bahasa asing memiliki penulisan baku dalam Bahasa Indonesia.", "Perhatikan perubahan huruf seperti 'v' menjadi 'f', 'ph' menjadi 'f', 'c' menjadi 'k', 'qu' menjadi 'ku', dll."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        },
+                        {
+                            questionText: "Manakah kalimat yang memiliki subjek dan predikat yang jelas?",
+                            options: [
+                                { text: "A. Bagi semua peserta diharapkan hadir tepat waktu.", isCorrect: false },
+                                { text: "B. Di dalam rapat membahas masalah keuangan.", isCorrect: false },
+                                { text: "C. Rapat itu membahas masalah keuangan.", isCorrect: true },
+                                { text: "D. Yang harus kita lakukan adalah bekerja keras.", isCorrect: false }
+                            ],
+                            trickText: ["Kalimat yang baik memiliki struktur SPOK yang jelas.", "Hindari penggunaan kata depan 'bagi' atau 'di' yang membuat subjek menjadi tidak jelas."],
+                            answered: false,
+                            isCorrectlyAnswered: null
+                        }
+                    ],
+                    currentQuestionIndex: 0
+                }
+            };
+            
+            // Global quiz stats
+            const quizStats = {
+                totalAnswered: 0,
+                correct: 0,
+                incorrect: 0
+            };
+
+            // Tab switching logic
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.dataset.tab;
+
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active', 'border-sky-600', 'text-sky-600', 'font-semibold');
+                        btn.classList.add('border-transparent');
+                    });
+                    button.classList.add('active', 'border-sky-600', 'text-sky-600', 'font-semibold');
+                    button.classList.remove('border-transparent');
+                    
+                    contentSections.forEach(section => {
+                        if (section.id === targetTab) {
+                            section.classList.add('active');
+                            // Render the current question for the newly active tab
+                            renderQuestion(targetTab);
+                            updateProgressPopup(); // Update popup when tab changes
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            // Function to render a specific question for an aspect
+            function renderQuestion(quizName) {
+                const quizData = quizzes[quizName];
+                const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+
+                const questionTextEl = document.getElementById(`question-text-${quizName}`);
+                const optionsContainer = document.getElementById(`options-${quizName}`);
+                const feedbackEl = document.getElementById(`feedback-${quizName}`);
+                const trickEl = document.getElementById(`trick-${quizName}`);
+                const trickListEl = document.getElementById(`trick-list-${quizName}`);
+                const questionCounterEl = document.getElementById(`question-counter-${quizName}`);
+                const nextButton = document.getElementById(`next-${quizName}`);
+                const prevButton = document.getElementById(`prev-${quizName}`); // Get previous button
+
+                // Reset state
+                feedbackEl.classList.add('hidden');
+                feedbackEl.className = 'text-sm font-medium p-3 rounded-md bg-slate-50 hidden'; // Reset classes
+                trickEl.classList.add('hidden');
+                optionsContainer.innerHTML = ''; // Clear previous options
+
+                // Update question text
+                questionTextEl.textContent = currentQuestion.questionText;
+
+                // Populate options
+                currentQuestion.options.forEach((option, index) => {
+                    const optionButton = document.createElement('button');
+                    optionButton.dataset.option = String.fromCharCode(65 + index); // A, B, C, D
+                    optionButton.className = 'option-button w-full text-left p-3 border border-slate-300 rounded-md hover:bg-sky-50 text-sm';
+                    optionButton.textContent = option.text;
+                    optionButton.disabled = currentQuestion.answered; // Disable if already answered
+
+                    // Apply previous answer styling if answered
+                    if (currentQuestion.answered) {
+                        const correctAnswer = quizData.questions[quizData.currentQuestionIndex].options.find(opt => opt.isCorrect);
+                        if (option.text === correctAnswer.text) { // If this is the correct option
+                            optionButton.classList.add('bg-green-100', 'border-green-500', 'text-green-700', 'font-semibold');
+                        } else if (currentQuestion.isCorrectlyAnswered === false && option.text === currentQuestion.selectedOptionText) { // If this was the user's incorrect answer
+                            optionButton.classList.add('bg-red-100', 'border-red-500', 'text-red-700');
+                        } else {
+                            optionButton.classList.add('bg-slate-50', 'opacity-75');
+                        }
+                    }
+
+                    optionButton.addEventListener('click', () => handleAnswer(quizName, optionButton, option.isCorrect));
+                    optionsContainer.appendChild(optionButton);
+                });
+
+                // Show feedback and trick if already answered
+                if (currentQuestion.answered) {
+                    feedbackEl.classList.remove('hidden');
+                    trickEl.classList.remove('hidden');
+                    if (currentQuestion.isCorrectlyAnswered) {
+                        feedbackEl.textContent = `Jawaban Anda (${currentQuestion.selectedOptionChar}) BENAR!`;
+                        feedbackEl.className = 'text-sm font-medium p-3 rounded-md feedback-correct bg-green-50 border border-green-200';
+                    } else {
+                        const correctOption = quizData.questions[quizData.currentQuestionIndex].options.find(opt => opt.isCorrect);
+                        feedbackEl.textContent = `Jawaban Anda (${currentQuestion.selectedOptionChar}) kurang tepat. Jawaban yang benar adalah ${correctOption.text.charAt(0)}.`;
+                        feedbackEl.className = 'text-sm font-medium p-3 rounded-md feedback-incorrect bg-red-50 border border-red-200';
+                    }
+                }
+
+                // Update trick text
+                trickListEl.innerHTML = '';
+                currentQuestion.trickText.forEach(trick => {
+                    const li = document.createElement('li');
+                    li.textContent = trick;
+                    trickListEl.appendChild(li);
+                });
+
+                // Update question counter
+                questionCounterEl.textContent = `Soal ${quizData.currentQuestionIndex + 1} dari ${quizData.questions.length}`;
+
+                // Show/hide navigation buttons
+                if (quizData.currentQuestionIndex < quizData.questions.length - 1) {
+                    nextButton.classList.remove('hidden');
+                } else {
+                    nextButton.classList.add('hidden');
+                }
+
+                if (quizData.currentQuestionIndex > 0) {
+                    prevButton.classList.remove('hidden');
+                } else {
+                    prevButton.classList.add('hidden');
+                }
+            }
+
+            // Function to handle answer selection
+            function handleAnswer(quizName, selectedButton, isCorrect) {
+                const quizData = quizzes[quizName];
+                const currentQuestion = quizData.questions[quizData.currentQuestionIndex];
+                const optionsContainer = document.getElementById(`options-${quizName}`);
+                const feedbackEl = document.getElementById(`feedback-${quizName}`);
+                const trickEl = document.getElementById(`trick-${quizName}`);
+
+                // Mark question as answered
+                if (!currentQuestion.answered) { // Only update stats if question not answered before
+                    currentQuestion.answered = true;
+                    quizStats.totalAnswered++;
+                    if (isCorrect) {
+                        quizStats.correct++;
+                        currentQuestion.isCorrectlyAnswered = true;
+                    } else {
+                        quizStats.incorrect++;
+                        currentQuestion.isCorrectlyAnswered = false;
+                    }
+                    currentQuestion.selectedOptionText = selectedButton.textContent;
+                    currentQuestion.selectedOptionChar = selectedButton.dataset.option;
+                    updateProgressPopup(); // Update popup immediately after answer
+                }
+                
+                // Disable all options
+                optionsContainer.querySelectorAll('.option-button').forEach(btn => {
+                    btn.disabled = true;
+                    const correctAnswer = quizData.questions[quizData.currentQuestionIndex].options.find(opt => opt.isCorrect);
+
+                    if (btn.textContent === correctAnswer.text) { // If this is the correct option
+                        btn.classList.add('bg-green-100', 'border-green-500', 'text-green-700', 'font-semibold');
+                    } else if (btn.dataset.option === selectedButton.dataset.option && !isCorrect) { // If this was the user's incorrect answer
+                        btn.classList.add('bg-red-100', 'border-red-500', 'text-red-700');
+                    } else {
+                        btn.classList.add('bg-slate-50', 'opacity-75');
+                    }
+                });
+
+                // Show feedback and trick
+                feedbackEl.classList.remove('hidden');
+                trickEl.classList.remove('hidden');
+
+                if (isCorrect) {
+                    feedbackEl.textContent = `Jawaban Anda (${selectedButton.dataset.option}) BENAR!`;
+                    feedbackEl.className = 'text-sm font-medium p-3 rounded-md feedback-correct bg-green-50 border border-green-200';
+                    startFireworks();
+                } else {
+                    const correctOption = quizData.questions[quizData.currentQuestionIndex].options.find(opt => opt.isCorrect);
+                    feedbackEl.textContent = `Jawaban Anda (${selectedButton.dataset.option}) kurang tepat. Jawaban yang benar adalah ${correctOption.text.charAt(0)}.`;
+                    feedbackEl.className = 'text-sm font-medium p-3 rounded-md feedback-incorrect bg-red-50 border border-red-200';
+                }
+            }
+
+            // Function to handle next question button click
+            function setupNextButton(quizName) {
+                const nextButton = document.getElementById(`next-${quizName}`);
+                if (nextButton) {
+                    nextButton.addEventListener('click', () => {
+                        const quizData = quizzes[quizName];
+                        if (quizData.currentQuestionIndex < quizData.questions.length - 1) {
+                            quizData.currentQuestionIndex++;
+                            renderQuestion(quizName);
+                        }
+                    });
+                }
+            }
+
+            // Function to handle previous question button click
+            function setupPrevButton(quizName) {
+                const prevButton = document.getElementById(`prev-${quizName}`);
+                if (prevButton) {
+                    prevButton.addEventListener('click', () => {
+                        const quizData = quizzes[quizName];
+                        if (quizData.currentQuestionIndex > 0) {
+                            quizData.currentQuestionIndex--;
+                            renderQuestion(quizName);
+                        }
+                    });
+                }
+            }
+
+            // Function to update the sticky progress popup
+            function updateProgressPopup() {
+                let totalQuestionsInCurrentTab = 0;
+                let answeredInCurrentTab = 0;
+                let correctInCurrentTab = 0;
+                let incorrectInCurrentTab = 0;
+
+                const activeTabId = document.querySelector('.content-section.active').id;
+                const activeQuizData = quizzes[activeTabId];
+
+                totalQuestionsInCurrentTab = activeQuizData.questions.length;
+                activeQuizData.questions.forEach(q => {
+                    if (q.answered) {
+                        answeredInCurrentTab++;
+                        if (q.isCorrectlyAnswered) {
+                            correctInCurrentTab++;
+                        } else {
+                            incorrectInCurrentTab++;
+                        }
+                    }
+                });
+
+                answeredQuestionsEl.textContent = answeredInCurrentTab;
+                totalQuestionsEl.textContent = totalQuestionsInCurrentTab;
+                correctAnswersEl.textContent = correctInCurrentTab;
+                incorrectAnswersEl.textContent = incorrectInCurrentTab;
+
+                // Show popup if any question is answered or if it's not initially hidden
+                if (answeredInCurrentTab > 0 || quizProgressPopup.classList.contains('show')) {
+                    quizProgressPopup.classList.add('show');
+                } else {
+                    quizProgressPopup.classList.remove('show');
+                }
+            }
+
+            // Initialize all quizzes and set up next/previous buttons
+            for (const quizName in quizzes) {
+                renderQuestion(quizName); // Render initial question for each tab
+                setupNextButton(quizName);
+                setupPrevButton(quizName); // Setup previous button
+            }
+
+            // Set initial active tab and update progress popup for it
+            renderQuestion('integritas');
+            updateProgressPopup(); // Initial update when page loads
+
+            // Fireworks effect logic
+            const fireworksCanvas = document.getElementById('fireworksCanvas');
+            const ctx = fireworksCanvas.getContext('2d');
+            let particles = [];
+            let animationFrameId;
+
+            function resizeCanvas() {
+                fireworksCanvas.width = window.innerWidth;
+                fireworksCanvas.height = window.innerHeight;
+            }
+
+            class Particle {
+                constructor(x, y, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.color = color;
+                    this.radius = Math.random() * 2 + 1;
+                    this.velocity = {
+                        x: (Math.random() - 0.5) * 6,
+                        y: (Math.random() - 0.5) * 6
+                    };
+                    this.alpha = 1;
+                    this.friction = 0.95;
+                    this.gravity = 0.1;
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                update() {
+                    this.velocity.x *= this.friction;
+                    this.velocity.y *= this.friction;
+                    this.velocity.y += this.gravity;
+                    this.x += this.velocity.x;
+                    this.y += this.velocity.y;
+                    this.alpha -= 0.01;
+                }
+            }
+
+            function createFireworks(x, y) {
+                const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FFA500'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const particleCount = 50;
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle(x, y, color));
+                }
+            }
+
+            function animateFireworks() {
+                ctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    particles[i].update();
+                    particles[i].draw();
+                    if (particles[i].alpha <= 0.05 || particles[i].radius <= 0.5) {
+                        particles.splice(i, 1);
+                    }
+                }
+                if (particles.length > 0) {
+                    animationFrameId = requestAnimationFrame(animateFireworks);
+                } else {
+                    fireworksCanvas.style.display = 'none';
+                    cancelAnimationFrame(animationFrameId);
+                }
+            }
+
+            function startFireworks() {
+                fireworksCanvas.style.display = 'block';
+                resizeCanvas();
+                const x = window.innerWidth / 2;
+                const y = window.innerHeight / 2;
+                createFireworks(x, y);
+                if (!animationFrameId) { // Only start if not already animating
+                    animateFireworks();
+                }
+                setTimeout(() => {
+                    // Clear fireworks after a short delay
+                    particles = []; // Clear particles to stop animation
+                }, 2000); // Fireworks last for 2 seconds
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+        });
+    </script>
+</body>
+</html>
