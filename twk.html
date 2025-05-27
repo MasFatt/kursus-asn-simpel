@@ -1063,5 +1063,51 @@
             window.addEventListener('resize', resizeCanvas);
         });
     </script>
+
+<script>
+    // Cegah klik kanan
+    document.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+    });
+  
+    // Cegah Ctrl+U, Ctrl+Shift+I, Ctrl+S, F12, dll
+    document.addEventListener('keydown', function (e) {
+      // Cegah Ctrl+U
+      if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+        e.preventDefault();
+      }
+  
+      // Cegah Ctrl+Shift+I (inspect element)
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') {
+        e.preventDefault();
+      }
+  
+      // Cegah Ctrl+S
+      if (e.ctrlKey && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+      }
+  
+      // Cegah F12
+      if (e.key === 'F12') {
+        e.preventDefault();
+      }
+    });
+  
+    // Cegah seleksi teks
+    document.addEventListener('selectstart', function (e) {
+      e.preventDefault();
+    });
+  
+    // Cegah drag teks
+    document.addEventListener('dragstart', function (e) {
+      e.preventDefault();
+    });
+  
+    // Cegah copy
+    document.addEventListener('copy', function (e) {
+      e.preventDefault();
+    });
+  </script>
+  
 </body>
 </html>
